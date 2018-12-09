@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt, QRect, QPoint, QTimer
 
 class Engine(QWidget):
     def __init__(self):
-        super.__init__()
+        super().__init__()
 
     def paintEvent(self, event):
         pass
