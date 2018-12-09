@@ -1,3 +1,5 @@
+from World import World
+
 import sys, time
 from PyQt5.QtGui import QPainter, QPen, QBrush, QColor
 from PyQt5.QtWidgets import QWidget, QApplication
@@ -6,6 +8,8 @@ from PyQt5.QtCore import Qt, QRect, QPoint, QTimer
 class Engine(QWidget):
     def __init__(self):
         super().__init__()
+
+        self.__active_world = World()
 
     def paintEvent(self, event):
         pass
