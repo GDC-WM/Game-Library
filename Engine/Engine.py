@@ -12,7 +12,10 @@ class Engine(QWidget):
         self.__active_world = World()
 
     def paintEvent(self, event):
-        pass
+        qp = QPainter()
+        qp.begin(self)
+        self.__active_world.draw_screen(qp)
+        qp.end()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

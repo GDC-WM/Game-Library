@@ -1,6 +1,6 @@
 from Entity import Entity
 
-class ActiveEntity(Entity):
+class ActiveEntity(Entity, image):
 
     def __init__(self):
-        super().__init__()
+        super().__init__(image)
