@@ -1,8 +1,8 @@
 class Entity():
 
-    def __init__(self, image):
+    def __init__(self):
         self.x
         self.y
         self.width
         self.height
-        self.image = image # Implement animation (Array of images? Dealt with by qt?)
+        self.image # Implement animation (Array of images? Dealt with by qt?)
