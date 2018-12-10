@@ -14,3 +14,9 @@ class Entity():
             and self.y + self.height <= Entity.y):
             return True
         return False
+
+    def getImage(self, scale):
+        if self.image = None:
+            return None
+        
+        return self.image.scaled(int(100*scale), int(100*scale))
