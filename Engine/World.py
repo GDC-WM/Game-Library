@@ -12,7 +12,9 @@ class World():
         # TODO: fill this in with code to draw all the objects onscreen
         pass
 
-    def addEntity(self, entity):
+    def addEntity(self, entity, x, y):
+        # Set x value of entity
+        # Set y value of entity
         self.__entity_list.append(entity)
 
     def removeEntity(self, entity):
