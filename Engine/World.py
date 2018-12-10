@@ -19,7 +19,8 @@ class World():
         self.__screen_height = engine.size().height()
 
         #default white background
-        self.background = QImage(self.__screen_width, self.__screen_height, QImage.Format_RGB32)
+        self.background = QImage(self.__screen_width, self.__screen_height, 
+                                 QImage.Format_RGB32)
         self.background.fill(QColor(255,255,255))
 
     def draw_screen(self, qp):
@@ -30,7 +31,9 @@ class World():
                     e.y + e.height/2 + self.__view_y < 0 and
                     e.y - e.height/2 + self.__view_y > self.__screen_height):
 
-                    qp.drawImage(QPoint(e.x, e.y), e.image)
+                    qp.drawImage(QPoint(int(e.x * self.engine.scale),
+                                 int(e.y * self.engine.scale)), 
+                                 e.getImage(self.engine.scale))
 
 
     def run(self):
