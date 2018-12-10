@@ -2,7 +2,7 @@ from World import World
 
 import sys, time
 from PyQt5 import QtCore
-from PyQt5.QtGui import QPainter, QPen, QBrush, QColor
+from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QScreen
 from PyQt5.QtWidgets import QWidget, QApplication
 from PyQt5.QtCore import Qt, QRect, QPoint, QThread, QObject
 
@@ -22,9 +22,13 @@ class Engine(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.active_world = World(self)
-
+        self.setFixedSize(QScreen.size(QApplication.primaryScreen()).width(), 
+                          QScreen.size(QApplication.primaryScreen()).height())
+        #set scale based on relation to 1080p
+        self.scale = QScreen.size(QApplication.primaryScreen()).width()/1080
         self.showFullScreen()
+
+        self.active_world = World(self)
         
         self.run_thread = self.RunThread(self)
         self.run_thread.start()
