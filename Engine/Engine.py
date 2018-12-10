@@ -1,45 +1,45 @@
 from World import World
 
-import sys, time, threading
+import sys, time
+from PyQt5 import QtCore
 from PyQt5.QtGui import QPainter, QPen, QBrush, QColor
 from PyQt5.QtWidgets import QWidget, QApplication
-from PyQt5.QtCore import Qt, QRect, QPoint, QTimer
+from PyQt5.QtCore import Qt, QRect, QPoint, QThread, QObject
 
 class Engine(QWidget):
+
+    class RunThread(QThread):
+        def __init__(self, engine):
+            QtCore.QThread.__init__(self) 
+            self.engine = engine
+            self.running = True
+        
+        def run(self):
+            while self.running:
+                self.engine.active_world.run()
+                time.sleep(.1)
+
     def __init__(self):
         super().__init__()
 
-        self.__active_world = World(self)
-        self.__running = True
+        self.active_world = World(self)
 
         self.showFullScreen()
+        
+        self.run_thread = self.RunThread(self)
+        self.run_thread.start()
 
     def paintEvent(self, event):
         qp = QPainter()
         qp.begin(self)
 
-        qp.drawImage(QPoint(0,0), self.__active_world.background)
-        self.__active_world.draw_screen(qp)
+        qp.drawImage(QPoint(0,0), self.active_world.background)
+        self.active_world.draw_screen(qp)
         
         qp.end()
-
-    def run(self):
-        while self.__running:
-            start_time = time.time()
-            
-            # Do stuff here
-
-            if (time.time() - start_time < 1/60):
-                time.sleep(1/60 - (time.time() - start_time))
-            self.show()
-
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Engine()
-
-    #t1 = threading.Thread(target=ex.run())
-    #t1.start()
-
     sys.exit(app.exec_())

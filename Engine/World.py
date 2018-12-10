@@ -1,3 +1,5 @@
+from ActiveEntity import ActiveEntity
+
 from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QImage
 from PyQt5.QtWidgets import QWidget, QApplication
 from PyQt5.QtCore import Qt, QRect, QPoint, QTimer
@@ -29,6 +31,12 @@ class World():
                     e.y - e.height/2 + self.__view_y > self.__screen_height):
 
                     qp.drawImage(QPoint(e.x, e.y), e.image)
+
+
+    def run(self):
+        for e in self.__entity_list:
+            if isInstance(e, ActiveEntity):
+                e.run()
 
 
     def addEntity(self, entity, x, y):
