@@ -14,7 +14,10 @@ class Engine(QWidget):
     def paintEvent(self, event):
         qp = QPainter()
         qp.begin(self)
+
+        qp.drawImage(QPoint(0,0), self.__active_world.background)
         self.__active_world.draw_screen(qp)
+        
         qp.end()
 
 if __name__ == '__main__':

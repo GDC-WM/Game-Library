@@ -8,6 +8,7 @@ class World():
         self.__entity_list = []
 
         self.engine = engine
+        self.background = None  # This should be a QImage
 
         # View offset for the camera to facilitate scrolling
         # These are added to the x and y value of each entity when rendered
