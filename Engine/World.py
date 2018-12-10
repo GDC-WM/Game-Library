@@ -1,7 +1,6 @@
 class World():
 
     def __init__(self):
-        
         self.__entity_list = []
 
     def addEntity(self, entity):
