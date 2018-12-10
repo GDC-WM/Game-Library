@@ -13,8 +13,8 @@ class World():
         pass
 
     def addEntity(self, entity, x, y):
-        # Set x value of entity
-        # Set y value of entity
+        entity.x = x
+        entity.y = y
         self.__entity_list.append(entity)
 
     def removeEntity(self, entity):
