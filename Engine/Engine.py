@@ -9,7 +9,7 @@ class Engine(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.__active_world = World()
+        self.__active_world = World(self)
 
     def paintEvent(self, event):
         qp = QPainter()
