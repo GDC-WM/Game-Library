@@ -1,4 +1,4 @@
-from PyQt5.QtGui import QPainter, QPen, QBrush, QColor
+from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QImage
 from PyQt5.QtWidgets import QWidget, QApplication
 from PyQt5.QtCore import Qt, QRect, QPoint, QTimer
 
@@ -8,15 +8,17 @@ class World():
         self.__entity_list = []
 
         self.engine = engine
-        self.background = None  # This should be a QImage
 
         # View offset for the camera to facilitate scrolling
         # These are added to the x and y value of each entity when rendered
         self.__view_x = 0
         self.__view_y = 0
-
         self.__screen_width = engine.size().width()
         self.__screen_height = engine.size().height()
+
+        #default white background
+        self.background = QImage(self.__screen_width, self.__screen_height, QImage.Format_RGB32)
+        self.background.fill(QColor(255,255,255))
 
     def draw_screen(self, qp):
         for e in self.__entity_list:

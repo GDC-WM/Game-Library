@@ -12,6 +12,8 @@ class Engine(QWidget):
         self.__active_world = World(self)
         self.__running = True
 
+        self.showFullScreen()
+
     def paintEvent(self, event):
         qp = QPainter()
         qp.begin(self)
@@ -26,9 +28,10 @@ class Engine(QWidget):
             start_time = time.time()
             
             # Do stuff here
-            
+
             if (time.time() - start_time < 1/60):
                 time.sleep(1/60 - (time.time() - start_time))
+            self.show()
 
 
 
@@ -36,7 +39,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Engine()
 
-    t1 = threading.Thread(target=ex.run())
-    t1.start()
+    #t1 = threading.Thread(target=ex.run())
+    #t1.start()
 
     sys.exit(app.exec_())
