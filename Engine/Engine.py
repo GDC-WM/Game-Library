@@ -20,6 +20,7 @@ class Engine(QWidget):
             while self.running:
                 start_time = time.time()
 
+                self.engine.active_world.runEntities()
                 self.engine.active_world.run()
                 
                 if(1/60 - (time.time() - start_time)) > 0:

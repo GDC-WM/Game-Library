@@ -35,11 +35,14 @@ class World():
                                  int(e.y * self.engine.scale)),
                                  e.getImage(self.engine.scale))
 
-
-    def run(self):
+    def runEntities(self):
         for e in self.__entity_list:
             if isInstance(e, ActiveEntity):
+                e.physics()
                 e.run()
+
+    def run(self):
+        pass
 
 
     def addEntity(self, entity, x, y):
