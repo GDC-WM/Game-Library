@@ -1,10 +1,12 @@
-from World import World
+import sys
+import time
 
-import sys, time
 from PyQt5 import QtCore
-from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QScreen
-from PyQt5.QtWidgets import QWidget, QApplication
-from PyQt5.QtCore import Qt, QRect, QPoint, QThread, QObject
+from PyQt5.QtCore import QObject, QPoint, QRect, Qt, QThread
+from PyQt5.QtGui import QBrush, QColor, QPainter, QPen, QScreen
+from PyQt5.QtWidgets import QApplication, QWidget
+
+from World import World
 
 class Engine(QWidget):
 
@@ -16,8 +18,12 @@ class Engine(QWidget):
         
         def run(self):
             while self.running:
+                start_time = time.time()
+
                 self.engine.active_world.run()
-                time.sleep(.1)
+                
+                if(1/60 - (time.time() - start_time)) > 0:
+                    time.sleep(1/60 - (time.time() - start_time))
 
     def __init__(self):
         super().__init__()
