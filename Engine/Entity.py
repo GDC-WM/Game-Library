@@ -8,9 +8,9 @@ class Entity():
         # Implement animation (Array of images? Dealt with by qt?)
         self.image = None
 
-    def is_touching(self, Entity):
-        if (self.x <= Entity.x + Entity.width and 
-            self.x + self.width <= Entity.x and self.y <= self.x + Entity.height 
+    def isTouching(self, Entity):
+        if (self.x <= Entity.x + Entity.width and
+            self.x + self.width <= Entity.x and self.y <= self.x + Entity.height
             and self.y + self.height <= Entity.y):
             return True
         return False
@@ -18,5 +18,5 @@ class Entity():
     def getImage(self, scale):
         if self.image = None:
             return None
-        
+
         return self.image.scaled(int(100*scale), int(100*scale))

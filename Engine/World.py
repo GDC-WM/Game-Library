@@ -23,16 +23,16 @@ class World():
                                  QImage.Format_RGB32)
         self.background.fill(QColor(255,255,255))
 
-    def draw_screen(self, qp):
+    def drawScreen(self, qp):
         for e in self.__entity_list:
             if e.image != None:
-                if (e.x + e.width/2 + self.__view_x < 0 and 
+                if (e.x + e.width/2 + self.__view_x < 0 and
                     e.x - e.width/2 + self.__view_x > self.__screen_width and
                     e.y + e.height/2 + self.__view_y < 0 and
                     e.y - e.height/2 + self.__view_y > self.__screen_height):
 
                     qp.drawImage(QPoint(int(e.x * self.engine.scale),
-                                 int(e.y * self.engine.scale)), 
+                                 int(e.y * self.engine.scale)),
                                  e.getImage(self.engine.scale))
 
 
