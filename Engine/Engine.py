@@ -44,7 +44,7 @@ class Engine(QWidget):
         qp.begin(self)
 
         qp.drawImage(QPoint(0,0), self.active_world.background)
-        self.active_world.draw_screen(qp)
+        self.active_world.drawScreen(qp)
         
         qp.end()
 
