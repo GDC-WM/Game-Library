@@ -4,6 +4,10 @@ class ActiveEntity(Entity):
 
     def __init__(self):
         super().__init__()
+        self.mass = 0;
 
-    def run():
+    def physics(self):
+        pass
+
+    def run(self):
         pass
