@@ -19,7 +19,7 @@ class World():
         self.__screen_height = engine.size().height()
 
         #default white background
-        self.background = QImage(self.__screen_width, self.__screen_height, 
+        self.background = QImage(self.__screen_width, self.__screen_height,
                                  QImage.Format_RGB32)
         self.background.fill(QColor(255,255,255))
 
@@ -46,6 +46,8 @@ class World():
 
 
     def addEntity(self, entity, x, y):
+        if ! isInstance(entity, Entity):
+            raise Exception("Must add object of type Entity")
         entity.x = x
         entity.y = y
         self.__entity_list.append(entity)
