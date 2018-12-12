@@ -1,3 +1,4 @@
+from Entity import Entity
 from ActiveEntity import ActiveEntity
 
 from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QImage
@@ -37,7 +38,7 @@ class World():
 
     def runEntities(self):
         for e in self.__entity_list:
-            if isInstance(e, ActiveEntity):
+            if isinstance(e, ActiveEntity):
                 e.physics()
                 e.run()
 
@@ -46,8 +47,8 @@ class World():
 
 
     def addEntity(self, entity, x, y):
-        if ! isInstance(entity, Entity):
-            raise Exception("Must add object of type Entity")
+        if not isinstance(entity, Entity):
+            raise TypeError("Only accepts objects of type Entity")
         entity.x = x
         entity.y = y
         self.__entity_list.append(entity)
