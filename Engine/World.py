@@ -25,6 +25,9 @@ class World():
         self.background.fill(QColor(255,255,255))
 
     def drawScreen(self, qp):
+        """Draws all entities to the screen.\n
+        qp -- a QPainter.
+        """
         for e in self.__entity_list:
             if e.image != None:
                 if (e.x + e.width/2 + self.__view_x < 0 and
@@ -37,16 +40,22 @@ class World():
                                  e.getImage(self.engine.scale))
 
     def runEntities(self):
+        """Calls the physics() and run() methods."""
         for e in self.__entity_list:
             if isinstance(e, ActiveEntity):
                 e.physics()
                 e.run()
 
     def run(self):
+        """User implementation of run method."""
         pass
 
 
     def addEntity(self, entity, x, y):
+        """Add the designated entity to the entity list.\n
+        x -- x-coordinate of the entity\n
+        y -- y-coordinate of the entity
+        """
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
         entity.x = x
@@ -54,4 +63,5 @@ class World():
         self.__entity_list.append(entity)
 
     def removeEntity(self, entity):
+        """Remove the designated entity from the entity list."""
         self.__entity_list.remove(entity)
