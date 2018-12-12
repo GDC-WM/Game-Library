@@ -1,6 +1,7 @@
 from Entity import Entity
 
 class ActiveEntity(Entity):
+    """A type of entity that allows for movement within the world."""
 
     def __init__(self):
         super().__init__()
@@ -10,7 +11,7 @@ class ActiveEntity(Entity):
         self.y_speed = 0
     
     def physics(self):
-        
+        """Applies the appropriate affects of game physics to the entity"""
         if self.physical:
             pass
 
@@ -18,4 +19,5 @@ class ActiveEntity(Entity):
         self.y = self.y + self.y_speed
 
     def run(self):
+        """User implementation of run method."""
         pass
