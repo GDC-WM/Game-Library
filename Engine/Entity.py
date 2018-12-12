@@ -1,4 +1,5 @@
 class Entity():
+    """General code for things that appear in the world."""
 
     def __init__(self):
         self.x = None
@@ -9,6 +10,7 @@ class Entity():
         self.image = None
 
     def isTouching(self, entity):
+        """Checks the bounds of the given entity against its own."""
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
         if (self.x <= entity.x + entity.width and
@@ -18,6 +20,7 @@ class Entity():
         return False
 
     def getImage(self, scale):
+        """Returns the image associated with the entity."""
         if self.image == None:
             return None
 
