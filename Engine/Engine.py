@@ -29,10 +29,11 @@ class Engine(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.setFixedSize(QScreen.size(QApplication.primaryScreen()).width(), 
-                          QScreen.size(QApplication.primaryScreen()).height())
+        self.screen_width = QScreen.size(QApplication.primaryScreen()).width()
+        self.screen_height = QScreen.size(QApplication.primaryScreen()).height()
+        self.setFixedSize(self.screen_width, self.screen_height)
         #set scale based on relation to 1080p
-        self.scale = QScreen.size(QApplication.primaryScreen()).width()/1080
+        self.scale = QScreen.size(self.screen_width/1080)
         self.showFullScreen()
 
         self.active_world = World(self)
