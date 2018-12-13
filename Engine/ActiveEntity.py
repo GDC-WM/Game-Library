@@ -21,3 +21,8 @@ class ActiveEntity(Entity):
     def run(self):
         """User implementation of run method."""
         pass
+    
+    def push(self, vector):
+        """Applies a force vector to the entity\n
+        vector -- magnitude and direction of the force
+        """

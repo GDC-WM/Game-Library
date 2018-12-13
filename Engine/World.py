@@ -10,17 +10,18 @@ class World():
     def __init__(self, engine):
         self.__entity_list = []
         self.__engine = engine
-        self.Screen = Entity()
-        self.Screen.x = 0
-        self.Screen.y = 0
-        self.Screen.width = self.__engine.screen_width
-        self.Screen.height = self.__engine.screen_height
+        self.screen = Entity()
+        self.screen.x = 0
+        self.screen.y = 0
+        self.screen.width = self.__engine.screen_width
+        self.screen.height = self.__engine.screen_height
+        self.tracked_entity = None
 
         # View offset for the camera to facilitate scrolling
         # These are added to the x and y value of each entity when rendered
 
         # default white background
-        self.background = QImage(self.Screen.width, self.Screen.height, QImage.Format_RGB32)
+        self.background = QImage(self.screen.width, self.screen.height, QImage.Format_RGB32)
         self.background.fill(QColor(255,255,255))
 
     def drawScreen(self, qp):
@@ -28,7 +29,7 @@ class World():
         qp -- a QPainter.
         """
         for e in self.__entity_list:
-            if e.image is not None and e.isInRange(self.Screen, 0):
+            if e.image is not None and e.isInRange(self.screen, 0):
                 qp.drawImage(QPoint(int(e.x * self.__engine.scale),
                                     int(e.y * self.__engine.scale)),
                                     e.getImage(self.__engine.scale))
@@ -40,10 +41,15 @@ class World():
                 e.physics()
                 e.run()
 
+        if self.tracked_entity is not None:
+            if not self.tracked_entity.isInRange(self.screen, self.screen.width/8):
+                self.screen.x = self.tracked_entity.x
+                self.screen.y = self.tracked_entity.y
+                # Make above code actually good. You get the idea!
+
     def run(self):
         """User implementation of run method."""
         pass
-
 
     def addEntity(self, entity, x, y):
         """Add the designated entity to the entity list.\n
@@ -59,3 +65,11 @@ class World():
     def removeEntity(self, entity):
         """Remove the designated entity from the entity list."""
         self.__entity_list.remove(entity)
+
+    def autoFocus(self, entity):
+        """Keeps the given entity on the screen"""
+        self.tracked_entity = entity
+
+    def manualFocus(self):
+        """Ends autoFocus"""
+        self.tracked_entity = None
