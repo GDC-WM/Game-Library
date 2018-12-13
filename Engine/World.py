@@ -10,18 +10,18 @@ class World():
     def __init__(self, engine):
         self.__entity_list = []
 
-        self.engine = engine
+        self.__engine = engine
+        self.Screen = Entity()
+        self.Screen.x = 0
+        self.Screen.y = 0
+        self.Screen.width = self.__engine.screen_width
+        self.Screen.height = self.__engine.screen_height
 
         # View offset for the camera to facilitate scrolling
         # These are added to the x and y value of each entity when rendered
-        self.__view_x = 0
-        self.__view_y = 0
-        self.__screen_width = engine.size().width()
-        self.__screen_height = engine.size().height()
 
         #default white background
-        self.background = QImage(self.__screen_width, self.__screen_height,
-                                 QImage.Format_RGB32)
+        self.background = QImage(self.Screen.width, self.Screen.height, QImage.Format_RGB32)
         self.background.fill(QColor(255,255,255))
 
     def drawScreen(self, qp):
@@ -30,14 +30,10 @@ class World():
         """
         for e in self.__entity_list:
             if e.image != None:
-                if (e.x + e.width/2 + self.__view_x < 0 and
-                    e.x - e.width/2 + self.__view_x > self.__screen_width and
-                    e.y + e.height/2 + self.__view_y < 0 and
-                    e.y - e.height/2 + self.__view_y > self.__screen_height):
-
-                    qp.drawImage(QPoint(int(e.x * self.engine.scale),
-                                 int(e.y * self.engine.scale)),
-                                 e.getImage(self.engine.scale))
+                if (e.isTouching(self.Screen)):
+                    qp.drawImage(QPoint(int(e.x * self.__engine.scale),
+                                 int(e.y * self.__engine.scale)),
+                                 e.getImage(self.__engine.scale))
 
     def runEntities(self):
         """Calls the physics() and run() methods."""
