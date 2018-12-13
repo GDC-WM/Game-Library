@@ -9,7 +9,6 @@ class World():
 
     def __init__(self, engine):
         self.__entity_list = []
-
         self.__engine = engine
         self.Screen = Entity()
         self.Screen.x = 0
@@ -20,7 +19,7 @@ class World():
         # View offset for the camera to facilitate scrolling
         # These are added to the x and y value of each entity when rendered
 
-        #default white background
+        # default white background
         self.background = QImage(self.Screen.width, self.Screen.height, QImage.Format_RGB32)
         self.background.fill(QColor(255,255,255))
 
@@ -29,11 +28,10 @@ class World():
         qp -- a QPainter.
         """
         for e in self.__entity_list:
-            if e.image != None:
-                if (e.isTouching(self.Screen)):
-                    qp.drawImage(QPoint(int(e.x * self.__engine.scale),
-                                 int(e.y * self.__engine.scale)),
-                                 e.getImage(self.__engine.scale))
+            if e.image is not None and e.isInRange(self.Screen, 0):
+                qp.drawImage(QPoint(int(e.x * self.__engine.scale),
+                                    int(e.y * self.__engine.scale)),
+                                    e.getImage(self.__engine.scale))
 
     def runEntities(self):
         """Calls the physics() and run() methods."""
