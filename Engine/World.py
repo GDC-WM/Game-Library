@@ -28,6 +28,8 @@ class World():
         """Draws all entities to the screen.\n
         qp -- a QPainter.
         """
+        qp.drawImage(QPoint(0,0), self.background)
+
         for e in self.__entity_list:
             if e.image is not None and e.isInRange(self.screen, 0):
                 qp.drawImage(QPoint(int(e.x * self.__engine.scale),

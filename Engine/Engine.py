@@ -19,12 +19,14 @@ class Engine(QWidget):
         def run(self):
             while self.running:
                 start_time = time.time()
-
-                self.engine.active_world.runEntities()
-                self.engine.active_world.run()
+                
+                if active_world is not None:
+                    self.engine.active_world.runEntities()
+                    self.engine.active_world.run()
                 
                 if(1/60 - (time.time() - start_time)) > 0:
                     time.sleep(1/60 - (time.time() - start_time))
+                self.update()
 
     def __init__(self):
         super().__init__()
@@ -36,7 +38,7 @@ class Engine(QWidget):
         self.scale = QScreen.size(self.screen_width/1080)
         self.showFullScreen()
 
-        self.active_world = World(self)
+        self.active_world = None
         
         self.run_thread = self.RunThread(self)
         self.run_thread.start()
@@ -45,13 +47,13 @@ class Engine(QWidget):
         qp = QPainter()
         qp.begin(self)
 
-        qp.drawImage(QPoint(0,0), self.active_world.background)
-        self.active_world.drawScreen(qp)
+        if active_world is not None:
+            self.active_world.drawScreen(qp)
         
         qp.end()
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Engine()
+    ex.active_world = World(ex)
     sys.exit(app.exec_())
