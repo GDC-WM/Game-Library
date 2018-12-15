@@ -20,7 +20,7 @@ class Engine(QWidget):
             while self.running:
                 start_time = time.time()
                 
-                if active_world is not None:
+                if self.active_world is not None:
                     self.engine.active_world.runEntities()
                     self.engine.active_world.run()
                 
@@ -47,7 +47,7 @@ class Engine(QWidget):
         qp = QPainter()
         qp.begin(self)
 
-        if active_world is not None:
+        if self.active_world is not None:
             self.active_world.drawScreen(qp)
         
         qp.end()
