@@ -20,13 +20,13 @@ class Engine(QWidget):
             while self.running:
                 start_time = time.time()
                 
-                if self.active_world is not None:
+                if self.engine.active_world is not None:
                     self.engine.active_world.runEntities()
                     self.engine.active_world.run()
                 
                 if(1/60 - (time.time() - start_time)) > 0:
                     time.sleep(1/60 - (time.time() - start_time))
-                self.update()
+                self.engine.update()
 
     def __init__(self):
         super().__init__()
@@ -35,7 +35,7 @@ class Engine(QWidget):
         self.screen_height = QScreen.size(QApplication.primaryScreen()).height()
         self.setFixedSize(self.screen_width, self.screen_height)
         #set scale based on relation to 1080p
-        self.scale = QScreen.size(self.screen_width/1080)
+        self.scale = self.screen_width/1080
         self.showFullScreen()
 
         self.active_world = None
