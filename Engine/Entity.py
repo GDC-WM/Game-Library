@@ -17,6 +17,18 @@ class Entity():
         """Returns the y-coordinate of the center of the entity"""
         return self.y + self.height / 2
 
+    def isTouching(self, entity):
+        """Checks if an entity is in contact with another"""
+        if not isinstance(entity, Entity):
+            raise TypeError("Only accepts objects of type Entity")
+        if (self.x <= entity.x + entity.width and
+            self.x + self.width <= entity.x and
+            self.y <= self.x + entity.height and
+            self.y + self.height <= entity.y):
+            return True
+        return False
+
+
     def isInRange(self, entity, range):
         """Checks the bounds of the given entity against its own."""
         if not isinstance(entity, Entity):
