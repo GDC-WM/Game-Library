@@ -1,3 +1,5 @@
+import math
+
 from Entity import Entity
 
 class ActiveEntity(Entity):
@@ -23,6 +25,8 @@ class ActiveEntity(Entity):
         pass
     
     def push(self, vector):
-        """Applies a force vector to the entity\n
-        vector -- magnitude and direction of the force
+        """Adds a momentum vector to the entity\n
+        vector -- magnitude and direction (radians) in a tuple
         """
+        self.x_speed = (self.mass*self.x_speed+vector[0]*math.cos(vector[1]))/self.mass
+        self.y_speed = (self.mass*self.y_speed+vector[0]*math.sin(vector[1]))/self.mass

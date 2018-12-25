@@ -1,4 +1,4 @@
-import Math
+import math
 
 class Entity():
     """General code for things that appear in the world."""
@@ -11,16 +11,6 @@ class Entity():
         # Implement animation (Array of images? Dealt with by qt?)
         self.image = None
 
-<<<<<<< HEAD
-=======
-    def getCenterX(self):
-        """Returns the x-coordinate of the center of the entity"""
-        return self.x + self.width / 2
-
-    def getCenterY(self):
-        """Returns the y-coordinate of the center of the entity"""
-        return self.y + self.height / 2
-
     def isTouching(self, entity):
         """Checks if an entity is in contact with another"""
         if not isinstance(entity, Entity):
@@ -32,13 +22,11 @@ class Entity():
             return True
         return False
 
-
->>>>>>> bea179c3ced4f5ca429a1a9e03b33af8ff3583da
     def isInRange(self, entity, range):
         """Checks the bounds of the given entity against its own."""
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
-        if Math.sqrt(((self.x + self.width / 2) - (entity.x + entity.width / 2))**2 +
+        if math.sqrt(((self.x + self.width / 2) - (entity.x + entity.width / 2))**2 +
                      ((self.y + self.height / 2) - (entity.y + entity.height / 2))**2) <= range:
             return True
         return False
