@@ -8,7 +8,6 @@ class Entity():
         self.y = None
         self.width = None
         self.height = None
-        # Implement animation (Array of images? Dealt with by qt?)
         self.image = None
 
     def isTouching(self, entity):
@@ -36,7 +35,7 @@ class Entity():
         if self.image == None:
             return None
 
-        return self.image.scaled(int(100*scale), int(100*scale))
+        return self.image.scaled(scale)
 
 class ActiveEntity(Entity):
     """A type of entity that allows for movement within the world."""
