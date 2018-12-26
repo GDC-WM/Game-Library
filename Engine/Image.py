@@ -6,16 +6,16 @@ class Image():
 
     def __init__(self, image):
 
-        self.image = QImage(image) 
+        self.__image = QImage(image) 
 
-    def scale(xFactor, yFactor):
-        self.image = self.image.scaled(self.width()*xFactor, self.height()*yFactor)
+    def setScale(self, xFactor, yFactor):
+        self.__image = self.__image.scaled(self.getWidth()*xFactor, self.getHeight()*yFactor)
 
-    def getScaled(factor):
-        return self.image.scaled(self.width().factor, self.height()*factor)
+    def getScale(self, factor):
+        return self.__image.scaled(self.getWidth()*factor, self.getHeight()*factor)
 
-    def width():
-        return self.image.size().width()
+    def getWidth(self):
+        return self.__image.size().width()
 
-    def height():
-        return self.image.size().height()
+    def getHeight(self):
+        return self.__image.size().height()
