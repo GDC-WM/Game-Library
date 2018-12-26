@@ -8,6 +8,12 @@ class Image():
 
         self.image = QImage(image) 
 
+    def scale(xFactor, yFactor):
+        self.image = self.image.scaled(self.width()*xFactor, self.height()*yFactor)
+
+    def getScaled(factor):
+        return self.image.scaled(self.width().factor, self.height()*factor)
+
     def width():
         return self.image.size().width()
 
