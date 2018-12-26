@@ -44,10 +44,8 @@ class World():
                 e.run()
 
         if self.tracked_entity is not None:
-            if not self.tracked_entity.isInRange(self.screen, self.screen.width/8):
-                self.screen.x += 1.2*self.tracked_entity.x_speed
-                self.screen.y += 1.2*self.tracked_entity.y_speed
-                # Make above code actually good. You get the idea!
+            self.screen.x = self.tracked_entity.x + self.tracked_entity.width / 2 - self.screen.width / 2
+            self.screen.y = self.tracked_entity.y + self.tracked_entity.height / 2 - self.screen.height / 2
 
     def run(self):
         """User implementation of run method."""
