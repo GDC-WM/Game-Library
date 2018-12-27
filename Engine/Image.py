@@ -13,7 +13,7 @@ class Image():
     def setScale(self, xFactor, yFactor):
         self.__image = self.__image.scaled(self.getWidth()*xFactor, self.getHeight()*yFactor)
 
-    def getScale(self, factor):
+    def getScaled(self, factor):
         return self.__image.scaled(self.getWidth()*factor, self.getHeight()*factor)
 
     def getWidth(self):
