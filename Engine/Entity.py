@@ -10,6 +10,10 @@ class Entity():
         self.height = None
         self.image = None
 
+        self.animated = False
+        self.animationDelay = None
+        self.animationCounter = 0
+
     def isTouching(self, entity):
         """Checks if an entity is in contact with another"""
         if not isinstance(entity, Entity):
@@ -36,6 +40,13 @@ class Entity():
             return None
 
         return self.image.scaled(scale)
+
+    def animationLoop(self):
+        if self.animationCounter == self.animationDelay:
+            self.image.nextImage()
+            self.animationCounter = 0
+        self.animationCounter += 1
+
 
 class ActiveEntity(Entity):
     """A type of entity that allows for movement within the world."""
