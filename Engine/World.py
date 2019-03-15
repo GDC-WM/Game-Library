@@ -7,8 +7,8 @@ from PyQt5.QtCore import Qt, QRect, QPoint, QTimer
 class World():
 
     def __init__(self, engine):
-        self.__entity_list = []
         self.__engine = engine
+        self.entity_list = []
         self.screen = Entity()
         self.screen.x = 0
         self.screen.y = 0
@@ -29,7 +29,7 @@ class World():
         """
         qp.drawImage(QPoint(0,0), self.background)
 
-        for e in self.__entity_list:
+        for e in self.entity_list:
             if e.image is not None and e.isInRange(self.screen, 0):
                 qp.drawImage(QPoint(int(e.x * self.__engine.scale),
                                     int(e.y * self.__engine.scale)),
@@ -37,7 +37,7 @@ class World():
 
     def runEntities(self):
         """Calls the physics() and run() methods."""
-        for e in self.__entity_list:
+        for e in self.entity_list:
             if isinstance(e, ActiveEntity):
                 e.physics()
                 e.run()
@@ -60,11 +60,11 @@ class World():
         entity.x = x
         entity.y = y
         entity.world = self
-        self.__entity_list.append(entity)
+        self.entity_list.append(entity)
 
     def removeEntity(self, entity):
         """Remove the designated entity from the entity list."""
-        self.__entity_list.remove(entity)
+        self.entity_list.remove(entity)
 
     def autoFocus(self, entity):
         """Keeps the given entity on the screen"""
