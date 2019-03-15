@@ -8,6 +8,15 @@ from PyQt5.QtWidgets import QApplication, QWidget
 
 from World import World
 
+class EngineInit():
+
+    def __init__(self):
+        pass
+
+    def startWorld(self, ex):
+        return World(ex)
+
+
 class Engine(QWidget):
 
     class RunThread(QThread):
@@ -51,6 +60,13 @@ class Engine(QWidget):
             self.active_world.drawScreen(qp)
         
         qp.end()
+
+    @staticmethod
+    def start(main):
+        app = QApplication(sys.argv)
+        ex = Engine()
+        ex.active_world = main.startWorld(ex)
+        sys.exit(app.exec_())
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

@@ -10,6 +10,7 @@ class Entity():
         self.width = None
         self.height = None
         self.image = None
+        self.world = None
 
         self.animated = False
         self.animationDelay = None

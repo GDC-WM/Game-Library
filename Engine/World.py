@@ -1,6 +1,6 @@
-from Entity import Entity, ActiveEntity 
+from Entity import Entity, ActiveEntity
 
-from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QImage
+from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QImage, QCursor
 from PyQt5.QtWidgets import QWidget, QApplication
 from PyQt5.QtCore import Qt, QRect, QPoint, QTimer
 
@@ -59,6 +59,7 @@ class World():
             raise TypeError("Only accepts objects of type Entity")
         entity.x = x
         entity.y = y
+        entity.world = self
         self.__entity_list.append(entity)
 
     def removeEntity(self, entity):
@@ -72,3 +73,11 @@ class World():
     def manualFocus(self):
         """Ends autoFocus"""
         self.tracked_entity = None
+
+    def mouseX(self):
+        """Get mouse X position"""
+        return QCursor.pos().x()
+
+    def mouseY(self):
+        """Get mouse Y position"""
+        return QCursor.pos().y()
