@@ -3,7 +3,7 @@ import time
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QObject, QPoint, QRect, Qt, QThread
-from PyQt5.QtGui import QBrush, QColor, QPainter, QPen, QScreen
+from PyQt5.QtGui import QBrush, QColor, QPainter, QPen, QScreen, QKeyEvent
 from PyQt5.QtWidgets import QApplication, QWidget
 
 from World import World
@@ -48,6 +48,7 @@ class Engine(QWidget):
         self.showFullScreen()
 
         self.active_world = None
+        self.pressed_keys = set()
         
         self.run_thread = self.RunThread(self)
         self.run_thread.start()
@@ -61,12 +62,45 @@ class Engine(QWidget):
         
         qp.end()
 
+    def keyPressEvent(self, event):
+        self.pressed_keys.add(event.key())
+
+    def keyReleaseEvent(self, event):
+        self.pressed_keys.discard(event.key())
+
     @staticmethod
     def start(main):
         app = QApplication(sys.argv)
         ex = Engine()
         ex.active_world = main.startWorld(ex)
         sys.exit(app.exec_())
+
+    @staticmethod
+    def key(keyName):
+        if len(keyName) == 1:
+            return ord(keyName.upper())
+        elif keyName == "left":
+            return 0x01000012
+        elif keyName == "up":
+            return 0x01000013
+        elif keyName == "right":
+            return 0x01000014
+        elif keyName == "down":
+            return 0x01000013
+        elif keyName == "shift":
+            return 0x01000020
+        elif keyName == "ctrl":
+            return 0x01000021
+        elif keyName == "alt":
+            return 0x01000023
+        elif keyName == "return":
+            return 0x01000004
+        elif keyName == "esc":
+            return 0x01000000
+        elif keyName == "tab":
+            return 0x01000001
+        elif keyName == "backspace":
+            return 0x01000003
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
