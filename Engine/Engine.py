@@ -28,7 +28,15 @@ class Engine(QWidget):
         def run(self):
             while self.running:
                 start_time = time.time()
-                
+
+                while len(self.engine.mouse_released) != 0:
+                    self.engine.mouse_released.pop()
+
+                while len(self.engine.mouse_up_instant) != 0:
+                    key = self.engine.mouse_up_instant.pop()
+                    self.engine.mouse_keys.discard(key)
+                    self.engine.mouse_released.add(key)
+
                 if self.engine.active_world is not None:
                     self.engine.active_world.runEntities()
                     self.engine.active_world.run()
@@ -49,6 +57,9 @@ class Engine(QWidget):
 
         self.active_world = None
         self.pressed_keys = set()
+        self.mouse_keys = set()
+        self.mouse_released = set()
+        self.mouse_up_instant = set()
         
         self.run_thread = self.RunThread(self)
         self.run_thread.start()
@@ -67,6 +78,13 @@ class Engine(QWidget):
 
     def keyReleaseEvent(self, event):
         self.pressed_keys.discard(event.key())
+
+    def mousePressEvent(self, event):
+        self.mouse_keys.add(event.button())
+
+    def mouseReleaseEvent(self, event):
+        self.mouse_up_instant.add(event.button())
+
 
     @staticmethod
     def start(main):
@@ -101,6 +119,15 @@ class Engine(QWidget):
             return 0x01000001
         elif keyName == "backspace":
             return 0x01000003
+
+    @staticmethod
+    def mouseKey(keyName):
+        if keyName == "left":
+            return 0x00000001
+        if keyName == "right":
+            return 0x00000002
+        if keyName == "middle":
+            return 0x00000004
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

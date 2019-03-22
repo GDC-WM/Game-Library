@@ -90,3 +90,8 @@ class World():
         """
         return (key in self.engine.pressed_keys)
 
+    def mousePressed(self, key=0x00000001 ):
+        return (key in self.engine.mouse_keys)
+
+    def mouseReleased(self, key=0x00000001 ):
+        return (key in self.engine.mouse_released)
