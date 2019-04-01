@@ -2,8 +2,8 @@ import math
 from Image import Image
 
 class Entity():
-    """General code for things that appear in the world."""
-
+    """General code for things that appear in the world.
+    """
     def __init__(self):
         self.x = None
         self.y = None
@@ -19,7 +19,8 @@ class Entity():
         self.animationCounter = 0
 
     def isTouching(self, entity):
-        """Checks if an entity is in contact with another"""
+        """Checks if an entity is in contact with another.
+        """
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
         if (self.x <= entity.x + entity.width and
@@ -30,7 +31,8 @@ class Entity():
         return False
 
     def isInRange(self, entity, rng):
-        """Checks the bounds of the given entity against its own."""
+        """Checks the bounds of the given entity against its own.
+        """
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
         if math.sqrt(((self.x + self.width / 2) - (entity.x + entity.width / 2))**2 +
@@ -39,7 +41,8 @@ class Entity():
         return False
 
     def getNeighbors(self):
-
+        """Get all entities in the current world that are colliding with this entity.
+        """
         neighbors = []
         for e in self.world.entity_list():
             if self.isTouching(e):
@@ -47,8 +50,7 @@ class Entity():
         return neighbors
 
     def getNeighborsTyped(self, entity):
-        """Get all entities in the current world of a specified type that are coliding with the\n
-        entity making the call. \n
+        """Get all entities of a specified type in the current world that are colliding with this entity.\n
         entity -- An entity of some specific subclass you are looking for. \n
         Example: \n
         \tenemy = FireEnemy()\n
@@ -81,6 +83,8 @@ class Entity():
         return self.image.getScaled(scale)
 
     def animationLoop(self):
+        """unknown
+        """
         if self.animationCounter == self.animationDelay:
             self.image.nextImage()
             self.animationCounter = 0
@@ -88,8 +92,8 @@ class Entity():
 
 
 class ActiveEntity(Entity):
-    """A type of entity that allows for movement within the world."""
-
+    """A type of entity that allows for movement within the world.
+    """
     def __init__(self):
         super().__init__()
         self.physical = False
@@ -98,7 +102,8 @@ class ActiveEntity(Entity):
         self.y_speed = 0
     
     def physics(self):
-        """Applies the appropriate affects of game physics to the entity"""
+        """Applies the appropriate affects of game physics to the entity
+        """
         if self.physical:
             pass
 
@@ -106,7 +111,8 @@ class ActiveEntity(Entity):
         self.y = self.y + self.y_speed
 
     def run(self):
-        """User implementation of run method."""
+        """User implementation of run method.
+        """
         pass
     
     def push(self, vector):

@@ -39,7 +39,8 @@ class World():
                                    int(e.y * self.engine.scale)), e.text)
 
     def runEntities(self):
-        """Calls the physics() and run() methods."""
+        """Calls the physics() and run() methods.
+        """
         for e in self.entity_list:
             if isinstance(e, ActiveEntity):
                 e.physics()
@@ -52,7 +53,8 @@ class World():
                              / 2 - self.screen.height / 2)
 
     def run(self):
-        """User implementation of run method."""
+        """User implementation of run method.
+        """
         pass
 
     def addEntity(self, entity, x, y):
@@ -62,39 +64,49 @@ class World():
         """
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
+
         entity.x = x
         entity.y = y
         entity.world = self
         self.entity_list.append(entity)
 
     def removeEntity(self, entity):
-        """Remove the designated entity from the entity list."""
+        """Remove the designated entity from the entity list.
+        """
         self.entity_list.remove(entity)
 
     def autoFocus(self, entity):
-        """Keeps the given entity on the screen"""
+        """Keeps the given entity on the screen.
+        """
         self.tracked_entity = entity
 
     def manualFocus(self):
-        """Ends autoFocus"""
+        """Ends autoFocus.
+        """
         self.tracked_entity = None
 
     def mouseX(self):
-        """Get mouse X position"""
+        """Get mouse X position.
+        """
         return QCursor.pos().x() / self.engine.scale
 
     def mouseY(self):
-        """Get mouse Y position"""
+        """Get mouse Y position.
+        """
         return QCursor.pos().y() / self.engine.scale
 
     def isKeyPressed(self, key):
-        """Check if a key is pressed\n
-        key -- An integer key ID. Use Engine.key(keyName) to convert to key ID.
+        """Check if a key is pressed.\n
+        key -- An integer key ID. Use Engine.key(keyName) to convert to key ID
         """
         return (key in self.engine.pressed_keys)
 
-    def mousePressed(self, key=0x00000001 ):
+    def mousePressed(self, key=0x00000001):
+        """unknown
+        """
         return (key in self.engine.mouse_keys)
 
-    def mouseReleased(self, key=0x00000001 ):
+    def mouseReleased(self, key=0x00000001):
+        """unknown
+        """
         return (key in self.engine.mouse_released)
