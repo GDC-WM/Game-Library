@@ -25,7 +25,7 @@ class World():
 
     def drawScreen(self, qp):
         """Draws all entities to the screen.\n
-        qp -- a QPainter.
+        qp -- a QPainter
         """
         qp.drawImage(QPoint(0,0), self.background)
 

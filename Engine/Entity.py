@@ -23,6 +23,7 @@ class Entity():
         """
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
+
         if (self.x <= entity.x + entity.width and
             self.x + self.width >= entity.x and
             self.y <= self.x + entity.height and
@@ -35,6 +36,7 @@ class Entity():
         """
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
+
         if math.sqrt(((self.x + self.width / 2) - (entity.x + entity.width / 2))**2 +
                      ((self.y + self.height / 2) - (entity.y + entity.height / 2))**2) <= rng:
             return True
@@ -49,32 +51,36 @@ class Entity():
                 neighbors.append(e)
         return neighbors
 
-    def getNeighborsTyped(self, entity):
+    def getNeighborsTyped(self, entity_type):
         """Get all entities of a specified type in the current world that are colliding with this entity.\n
-        entity -- An entity of some specific subclass you are looking for. \n
-        Example: \n
+        entity_type -- A subclass of entity\n
+        Example:\n
         \tenemy = FireEnemy()\n
-        \tfireEnemies = self.getNeighborsTyped(enemy) \n
+        \tfireEnemies = self.getNeighborsTyped(enemy)\n
         This will return all FireEnemy entities in the world that are touching the entity acting.
         """
+        if not issubclass(entity_type, Entity):
+            raise TypeError("Only accepts objects of type Entity")
+
         neighbors = []
         for e in self.world.entity_list():
-            if self.isTouching(e) and isinstance(type(entity)) :
+            if self.isTouching(e) and isinstance(entity_type):
                 neighbors.append(e)
         return neighbors
 
     def setImage(self, image):
-        """Sets the image \n
+        """Sets the image\n
         image -- Type Image
         """
         if not isinstance(image, Image):
             raise TypeError("Only accepts objects of type Image")
+
         self.image = image
         self.width = image.getWidth()
         self.height = image.getHeight()
 
     def getImage(self, scale):
-        """Returns the image associated with the entity. \n
+        """Returns the image associated with the entity.\n
         scale -- A double representation of the scaling factor
         """
         if self.image == None:
