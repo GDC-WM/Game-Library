@@ -30,13 +30,14 @@ class World():
         qp.drawImage(QPoint(0,0), self.background)
 
         for e in self.entity_list:
-            if e.image is not None and e.isNeighbor(self.screen):        
-                qp.drawImage(QPoint(int(e.x * self.engine.scale),
-                                    int(e.y * self.engine.scale)),
-                                    e.getImage(self.engine.scale))
-            elif e.text is not None and e.isNeighbor(self.screen):
-                qp.drawText(QPoint(int(e.x * self.engine.scale),
-                                   int(e.y * self.engine.scale)), e.text)
+            if e.isNeighbor(self.screen):
+                if e.image:        
+                    qp.drawImage(QPoint(int(e.x * self.engine.scale),
+                                        int(e.y * self.engine.scale)),
+                                        e.getImage(self.engine.scale))
+                elif e.text:
+                    qp.drawText(QPoint(int(e.x * self.engine.scale),
+                                       int(e.y * self.engine.scale)), e.text)
 
     def runEntities(self):
         """Calls the physics() and run() methods.
@@ -46,7 +47,7 @@ class World():
                 e.physics()
                 e.run()
 
-        if self.tracked_entity is not None:
+        if self.tracked_entity:
             self.screen.x = (self.tracked_entity.x + self.tracked_entity.width
                              / 2 - self.screen.width / 2)
             self.screen.y = (self.tracked_entity.y + self.tracked_entity.height
@@ -71,12 +72,14 @@ class World():
         self.entity_list.append(entity)
 
     def removeEntity(self, entity):
-        """Remove the designated entity from the entity list.
+        """Remove the designated entity from the entity list.\n
+        entity -- type Entity
         """
         self.entity_list.remove(entity)
 
     def autoFocus(self, entity):
-        """Keeps the given entity on the screen.
+        """Keeps the given entity on the screen.\n
+        entity -- type Entity
         """
         self.tracked_entity = entity
 
