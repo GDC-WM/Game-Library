@@ -18,54 +18,64 @@ class Entity():
         self.animationDelay = None
         self.animationCounter = 0
 
-    def isTouching(self, entity):
-        """Checks if an entity is in contact with another.
+    def isNeighbor(self, entity):
+        """Checks if this entity is in contact with another.
+        entity -- type Entity
         """
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
 
-        if (self.x <= entity.x + entity.width and
-            self.x + self.width >= entity.x and
-            self.y <= self.x + entity.height and
-            self.y + self.height >= entity.y):
-            return True
-        return False
+        return (self.x <= entity.x + entity.width and
+                self.x + self.width >= entity.x and
+                self.y <= self.x + entity.height and
+                self.y + self.height >= entity.y)
 
     def isInRange(self, entity, rng):
-        """Checks the bounds of the given entity against its own.
+        """Checks the bounds of the given entity against its own.\n
+        entity -- type Entity\n
+        rng -- integer distance between the centers of the entities
         """
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
 
-        if math.sqrt(((self.x + self.width / 2) - (entity.x + entity.width / 2))**2 +
-                     ((self.y + self.height / 2) - (entity.y + entity.height / 2))**2) <= rng:
-            return True
-        return False
+        return math.sqrt(((self.x + self.width / 2) - (entity.x + entity.width / 2))**2 +
+                         ((self.y + self.height / 2) - (entity.y + entity.height / 2))**2) <= rng
 
-    def getNeighbors(self):
-        """Get all entities in the current world that are colliding with this entity.
-        """
-        neighbors = []
-        for e in self.world.entity_list():
-            if self.isTouching(e):
-                neighbors.append(e)
-        return neighbors
-
-    def getNeighborsTyped(self, entity_type):
-        """Get all entities of a specified type in the current world that are colliding with this entity.\n
+    def getNeighbors(self, *args):
+        """Get entities in the current world that are in contact with this entity. Option to specify a certain type of entity to look for and a range at which to look for them.\n
         entity_type -- A subclass of entity\n
-        Example:\n
-        \tenemy = FireEnemy()\n
-        \tfireEnemies = self.getNeighborsTyped(enemy)\n
-        This will return all FireEnemy entities in the world that are touching the entity acting.
+        rng -- integer distance between the centers of the entities
         """
-        if not issubclass(entity_type, Entity):
-            raise TypeError("Only accepts objects of type Entity")
-
+        rng = None
+        entity_type = None
         neighbors = []
-        for e in self.world.entity_list():
-            if self.isTouching(e) and isinstance(entity_type):
-                neighbors.append(e)
+
+        for arg in args:
+            if isinstance(arg, int):
+                rng = arg
+            elif issubclass(arg, Entity):
+                entity_type = arg
+            else:
+                raise TypeError("Only accepts integers or a subclass of Entity")
+
+        if entity_type:
+            if rng:
+                for e in self.world.entity_list():
+                    if isinstance(e, entity_type) and self.isInRange(e, rng):
+                        neighbors.append(e)
+            else:
+                for e in self.world.entity_list():
+                    if isinstance(e, entity_type) and self.isNeighbor(e):
+                        neighbors.append(e)
+        else:
+            if rng:
+                for e in self.world.entity_list():
+                    if self.isInRange(e, rng):
+                        neighbors.append(e)
+            else:
+                for e in self.world.entity_list():
+                    if self.isNeighbor(e):
+                        neighbors.append(e)
         return neighbors
 
     def setImage(self, image):
@@ -83,10 +93,7 @@ class Entity():
         """Returns the image associated with the entity.\n
         scale -- A double representation of the scaling factor
         """
-        if self.image == None:
-            return None
-
-        return self.image.getScaled(scale)
+        return self.image.getScaled(scale) if self.image else None
 
     def animationLoop(self):
         """unknown

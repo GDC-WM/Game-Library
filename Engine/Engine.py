@@ -37,15 +37,15 @@ class Engine(QWidget):
             while self.running:
                 start_time = time.time()
 
-                while len(self.engine.mouse_released) != 0:
+                while self.engine.mouse_released:
                     self.engine.mouse_released.pop()
 
-                while len(self.engine.mouse_up_instant) != 0:
+                while self.engine.mouse_up_instant:
                     key = self.engine.mouse_up_instant.pop()
                     self.engine.mouse_keys.discard(key)
                     self.engine.mouse_released.add(key)
 
-                if self.engine.active_world is not None:
+                if self.engine.active_world:
                     self.engine.active_world.runEntities()
                     self.engine.active_world.run()
                 
@@ -79,8 +79,7 @@ class Engine(QWidget):
         qp = QPainter()
         qp.begin(self)
 
-        if self.active_world is not None:
-            self.active_world.drawScreen(qp)
+        self.active_world and self.active_world.drawScreen(qp)
         
         qp.end()
 
