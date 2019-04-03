@@ -60,7 +60,7 @@ class Engine(QWidget):
         self.screen_height = QScreen.size(QApplication.primaryScreen()).height()
         self.setFixedSize(self.screen_width, self.screen_height)
         #set scale based on relation to 1080p
-        self.scale = self.screen_width/1080
+        self.scale = self.screen_height/1080
         self.showFullScreen()
 
         self.active_world = None
@@ -68,7 +68,7 @@ class Engine(QWidget):
         self.mouse_keys = set()
         self.mouse_released = set()
         self.mouse_up_instant = set()
-        
+
         self.run_thread = self.RunThread(self)
         self.run_thread.start()
 
@@ -106,8 +106,7 @@ class Engine(QWidget):
         event -- 
         """
         self.mouse_up_instant.add(event.button())
-
-
+    
     @staticmethod
     def start(main):
         """unknown
