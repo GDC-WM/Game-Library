@@ -25,10 +25,10 @@ class Entity():
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
 
-        return (self.x <= entity.x + entity.width and
-                self.x + self.width >= entity.x and
-                self.y <= self.x + entity.height and
-                self.y + self.height >= entity.y)
+        return (self.x < entity.x + entity.width and
+                self.x + self.width > entity.x and
+                self.y < self.x + entity.height and
+                self.y + self.height > entity.y)
 
     def isInRange(self, entity, rng):
         """Checks the bounds of the given entity against its own.\n
@@ -48,7 +48,7 @@ class Entity():
         """
         rng = None
         entity_type = None
-        neighbors = []
+        neighbors = set()
 
         for arg in args:
             if isinstance(arg, int):
@@ -62,20 +62,23 @@ class Entity():
             if rng:
                 for e in self.world.entity_list():
                     if isinstance(e, entity_type) and self.isInRange(e, rng):
-                        neighbors.append(e)
+                        neighbors.add(e)
             else:
                 for e in self.world.entity_list():
                     if isinstance(e, entity_type) and self.isNeighbor(e):
-                        neighbors.append(e)
+                        neighbors.add(e)
         else:
             if rng:
                 for e in self.world.entity_list():
                     if self.isInRange(e, rng):
-                        neighbors.append(e)
+                        neighbors.add(e)
             else:
                 for e in self.world.entity_list():
                     if self.isNeighbor(e):
-                        neighbors.append(e)
+                        neighbors.add(e)
+        
+        neighbors.remove(self)  #go fuck yourself.
+
         return neighbors
 
     def setImage(self, image):
@@ -132,5 +135,5 @@ class ActiveEntity(Entity):
         """Adds a momentum vector to the entity\n
         vector -- magnitude and direction (radians) in a tuple
         """
-        self.x_speed = (self.mass*self.x_speed+vector[0]*math.cos(vector[1]))/self.mass
-        self.y_speed = (self.mass*self.y_speed+vector[0]*math.sin(vector[1]))/self.mass
+        self.x_speed = (self.mass * self.x_speed + vector[0] * math.cos(vector[1])) / self.mass
+        self.y_speed = (self.mass * self.y_speed + vector[0] * math.sin(vector[1])) / self.mass

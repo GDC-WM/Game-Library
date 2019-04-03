@@ -8,7 +8,7 @@ class World():
 
     def __init__(self, engine):
         self.engine = engine
-        self.entity_list = []
+        self.entities = set()
         self.screen = Entity()
         self.screen.x = 0
         self.screen.y = 0
@@ -29,7 +29,7 @@ class World():
         """
         qp.drawImage(QPoint(0,0), self.background)
 
-        for e in self.entity_list:
+        for e in self.entities:
             if e.isNeighbor(self.screen):
                 if e.image:        
                     qp.drawImage(QPoint(int(e.x * self.engine.scale),
@@ -42,7 +42,7 @@ class World():
     def runEntities(self):
         """Calls the physics() and run() methods.
         """
-        for e in self.entity_list:
+        for e in self.entities:
             if isinstance(e, ActiveEntity):
                 e.physics()
                 e.run()
@@ -69,13 +69,13 @@ class World():
         entity.x = x
         entity.y = y
         entity.world = self
-        self.entity_list.append(entity)
+        self.entities.add(entity)
 
     def removeEntity(self, entity):
         """Remove the designated entity from the entity list.\n
         entity -- type Entity
         """
-        self.entity_list.remove(entity)
+        self.entities.remove(entity)
 
     def autoFocus(self, entity):
         """Keeps the given entity on the screen.\n
