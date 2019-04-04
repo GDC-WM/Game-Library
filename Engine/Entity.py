@@ -27,7 +27,7 @@ class Entity():
 
         return (self.x <= entity.x + entity.width and
                 self.x + self.width >= entity.x and
-                self.y <= self.x + entity.height and
+                self.y <= entity.y + entity.height and
                 self.y + self.height >= entity.y)
 
     def isInRange(self, entity, rng):
