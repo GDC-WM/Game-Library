@@ -25,10 +25,10 @@ class Entity():
         if not isinstance(entity, Entity):
             raise TypeError("Only accepts objects of type Entity")
 
-        return (self.x < entity.x + entity.width and
-                self.x + self.width > entity.x and
-                self.y < self.x + entity.height and
-                self.y + self.height > entity.y)
+        return (self.x <= entity.x + entity.width and
+                self.x + self.width >= entity.x and
+                self.y <= self.x + entity.height and
+                self.y + self.height >= entity.y)
 
     def isInRange(self, entity, rng):
         """Checks the bounds of the given entity against its own.\n
@@ -77,7 +77,7 @@ class Entity():
                     if self.isNeighbor(e):
                         neighbors.add(e)
         
-        neighbors.remove(self)  #go fuck yourself.
+        neighbors.discard(self)  #"Thou shalt love thy neighbor, not thyself" -God
 
         return neighbors
 
@@ -105,7 +105,6 @@ class Entity():
             self.image.nextImage()
             self.animationCounter = 0
         self.animationCounter += 1
-
 
 class ActiveEntity(Entity):
     """A type of entity that allows for movement within the world.
