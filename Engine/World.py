@@ -98,16 +98,33 @@ class World():
         """
         return QCursor.pos().y() / self.engine.scale
 
-    def isKeyPressed(self, key):
+    def keyDown(self, key):
         """Check if a key is pressed.\n
         key -- An integer key ID. Use Engine.key(keyName) to convert to key ID
         """
-        return (key in self.engine.pressed_keys)
+        return (key in self.engine.keys)
+        
+    def keyPressed(self, key):
+        """Check if a key has just been pressed.\n
+        key -- An integer key ID. Use Engine.key(keyName) to convert to key ID
+        """
+        return (key in self.engine.keys_pressed)
+
+    def keyReleased(self, key):
+        """Check if a key has just been released.\n 
+        key -- An integer key ID. Use Engine.key(keyName) to convert to key ID
+        """
+        return (key in self.engine.keys_released)
+
+    def mouseDown(self, key=0x00000001):
+        """unknown
+        """
+        return (key in self.engine.mouse_keys)
 
     def mousePressed(self, key=0x00000001):
         """unknown
         """
-        return (key in self.engine.mouse_keys)
+        return (key in self.engine.mouse_pressed)
 
     def mouseReleased(self, key=0x00000001):
         """unknown

@@ -37,8 +37,30 @@ class Engine(QWidget):
             while self.running:
                 start_time = time.time()
 
+                while self.engine.keys_pressed:
+                    self.engine.keys_pressed.pop()
+
+                while self.engine.keys_released:
+                    self.engine.keys_released.pop()
+                
+                while self.engine.keys_down_instant: 
+                    key = self.engine.keys_down_instant.pop()
+                    self.engine.keys_pressed.add(key)
+                
+                while self.engine.keys_up_instant:
+                    key = self.engine.keys_up_instant.pop()
+                    self.engine.keys.discard(key)
+                    self.engine.keys_released.add(key)
+                
+                while self.engine.mouse_pressed:
+                    self.engine.mouse_pressed.pop()
+
                 while self.engine.mouse_released:
                     self.engine.mouse_released.pop()
+
+                while self.engine.mouse_down_instant:
+                    key = self.engine.mouse_down_instant.pop()
+                    self.engine.keys_pressed.add(key)
 
                 while self.engine.mouse_up_instant:
                     key = self.engine.mouse_up_instant.pop()
@@ -63,10 +85,18 @@ class Engine(QWidget):
         self.scale = self.screen_height/1080
 
         self.active_world = None
-        self.pressed_keys = set()
-        self.mouse_keys = set()
+
+        self.keys = set()           #keys being pressed
+        self.keys_pressed = set()   #keys that were just pressed this frame
+        self.keys_released = set()
+        self.keys_up_instant = set()
+        self.keys_down_instant = set()
+
+        self.mouse_keys = set()     #mouse keys being pressed
+        self.mouse_pressed = set()  #mouse keys that were just released
         self.mouse_released = set()
         self.mouse_up_instant = set()
+        self.mouse_down_instant = set()
 
         self.showFullScreen()
         self.run_thread = self.RunThread(self)
@@ -87,19 +117,21 @@ class Engine(QWidget):
         """lazy\n
         event -- 
         """
-        self.pressed_keys.add(event.key())
+        self.keys.add(event.key())
+        self.keys_down_instant.add(event.key())
 
     def keyReleaseEvent(self, event):
         """lazy\n
         event -- 
         """
-        self.pressed_keys.discard(event.key())
+        self.keys_up_instant.add(event.key())
 
     def mousePressEvent(self, event):
         """lazy\n
         event -- 
         """
         self.mouse_keys.add(event.button())
+        self.mouse_down_instant.add(event.button())
 
     def mouseReleaseEvent(self, event):
         """lazy\n
