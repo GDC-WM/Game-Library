@@ -25,6 +25,19 @@ class Image():
         return self.getImage().scaled(self.getWidth()*self.scale*factor, 
                                       self.getHeight()*self.scale*factor)
 
+    def setPixel(self, x, y, color):
+        """Sets a pixel on the image to be a specified color\n
+        x -- x coordinate to change (starting at 0)\n
+        y -- y coordinate to change (starting at 0)\n
+        color -- list with three or four values of the form (red, green, blue, [alpha])
+        """
+        if x >= self.getWidth() or x < 0 or y >= self.getHeight() or y < 0:
+            raise IndexError("Invalid coordinates.")
+
+        if len(color) == 3:
+            color.append(0xFF)
+        self.image.setPixelColor(x, y, QColor(color[0], color[1], color[2], color[3]))
+
     def getWidth(self):
         return self.image.size().width()
 
