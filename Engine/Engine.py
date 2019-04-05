@@ -61,7 +61,6 @@ class Engine(QWidget):
         self.setFixedSize(self.screen_width, self.screen_height)
         #set scale based on relation to 1080p
         self.scale = self.screen_height/1080
-        self.showFullScreen()
 
         self.active_world = None
         self.pressed_keys = set()
@@ -69,6 +68,7 @@ class Engine(QWidget):
         self.mouse_released = set()
         self.mouse_up_instant = set()
 
+        self.showFullScreen()
         self.run_thread = self.RunThread(self)
         self.run_thread.start()
 
