@@ -113,3 +113,11 @@ class World():
         """unknown
         """
         return (key in self.engine.mouse_released)
+
+    def mouseOver(self, entity):
+        """Is the mouse over the entity?
+        """
+        return (self.mouseX() <= entity.x + entity.width and
+                self.mouseX() >= entity.x and
+                self.mouseY() <= entity.y + entity.height and
+                self.mouseY() >= entity.y)
