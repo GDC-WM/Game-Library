@@ -5,37 +5,46 @@ from PyQt5.QtCore import Qt, QRect, QPoint
 class Image():
     
     def __init__(self, filename):
-        self.__image = QImage(filename)
+        self.image = QImage(filename)
+        self.scale = 1
+        self.width = self.getWidth()
+        self.height = self.getHeight()
 
     def getImage(self):
-        return self.__image
+        return self.image.scaled(self.getWidth()*self.scale,
+                                 self.getHeight()*self.scale)
 
-    def setScale(self, xFactor, yFactor):
-        self.__image = self.__image.scaled(self.getWidth()*xFactor, self.getHeight()*yFactor)
+    def setScale(self, factor):
+        self.scale = factor
+
+    def setSize(self, xSize, ySize):
+        self.image = self.image.scaledToWidth(xSize)
+        self.image = self.image.scaledToHeight(ySize)
 
     def getScaled(self, factor):
-        return self.__image.scaled(self.getWidth()*factor, self.getHeight()*factor)
+        return self.getImage().scaled(self.getWidth()*self.scale*factor, 
+                                      self.getHeight()*self.scale*factor)
 
     def getWidth(self):
-        return self.__image.size().width()
+        return self.image.size().width()
 
     def getHeight(self):
-        return self.__image.size().height()
+        return self.image.size().height()
 
 class ImageGroup():
 
     def __init__(self):
-        self.__images = []
-        self.__image_index = 0
+        self.images = []
+        self.image_index = 0
 
     def addImage(self, image):
-        self.__images.append(image)
+        self.images.append(image)
     
     def getImage(self):
-        return self.__images[self.__image_index]
+        return self.images[self.image_index]
 
     def setStart(self):
-        self.image = self.__images[0]
+        self.image = self.images[0]
 
     def nextImage(self):
-        self.__image_index = (self.__image_index + 1) % len(self.__images)
+        self.image_index = (self.image_index + 1) % len(self.images)
